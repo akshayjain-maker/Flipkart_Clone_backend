@@ -4,6 +4,8 @@ const { connectDB, sequelize } = require("./config/db");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const AddressRoutes = require("./routes/addressRoutes");
+const panRoutes = require('./routes/panRoutes');
 const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -21,6 +23,8 @@ sequelize.sync({ alter: true })
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/addresses", AddressRoutes);
+app.use('/api/pan', panRoutes);
 
 // Error Middleware (last)
 app.use(errorHandler);
