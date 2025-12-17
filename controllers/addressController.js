@@ -5,7 +5,7 @@ exports.addAddress = async (req, res) => {
   try {
     const userId = req.user.id;
     const payload = { ...req.body, userId };
-
+console.log(payload);
     const address = await Address.create(payload);
     res.json({ success: true, address , message: "Address added successfully" });
   } catch (err) {

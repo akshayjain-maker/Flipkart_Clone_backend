@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const AddressRoutes = require("./routes/addressRoutes");
 const panRoutes = require('./routes/panRoutes');
+const categoryRoutes = require('./routes/categoryRoutes'); 
 const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -25,6 +26,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/addresses", AddressRoutes);
 app.use('/api/pan', panRoutes);
+app.use('/api/categories', categoryRoutes);
+
 
 // Error Middleware (last)
 app.use(errorHandler);
