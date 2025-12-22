@@ -43,6 +43,11 @@ const User = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
+
+    role: {
+      type: DataTypes.ENUM("USER", "ADMIN"),
+      defaultValue: "USER"
+    }
   },
   {
     timestamps: true,

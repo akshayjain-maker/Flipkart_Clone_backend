@@ -19,9 +19,9 @@ const Category = sequelize.define('Category', {
 }, {
   tableName: 'Categories'
 });
-Category.hasMany(models.Product, {
-  foreignKey: "categoryId",
-  as: "products"
-});
+// Category.hasMany(models.Product, {
+//   foreignKey: "categoryId",
+//   as: "products"
+// });
 
 module.exports = Category;
