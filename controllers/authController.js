@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const { User } = require("../models"); // ✅ FIX
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -9,13 +9,16 @@ exports.registerUser = async (req, res, next) => {
     // check exists
     const exist = await User.findOne({ where: { email } });
     if (exist) {
-      res.status(400);
-      throw new Error("User already exists");
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const hashedPass = await bcrypt.hash(password, 10);
 
-    const user = await User.create({ name, email, password: hashedPass });
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPass
+    });
 
     res.status(201).json({
       message: "User registered successfully",
@@ -25,7 +28,6 @@ exports.registerUser = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.loginUser = async (req, res, next) => {
   try {
@@ -41,11 +43,11 @@ exports.loginUser = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // 🔐 JWT me role bhi include karo
+    // 🔐 JWT
     const token = jwt.sign(
       {
         id: user.id,
-        role: user.role   // 👈 IMPORTANT
+        role: user.role
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -58,11 +60,10 @@ exports.loginUser = async (req, res, next) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role   // 👈 FRONTEND KE LIYE
+        role: user.role
       }
     });
   } catch (err) {
     next(err);
   }
 };
-

@@ -1,49 +1,27 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../config/db");
+module.exports = (sequelize, DataTypes) => {
+  const Address = sequelize.define("Address", {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    name: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    pincode: DataTypes.STRING,
+    locality: DataTypes.STRING,
+    address: DataTypes.TEXT,
+    city: DataTypes.STRING,
+    state: DataTypes.STRING,
+    landmark: DataTypes.STRING,
+    alternatePhone: DataTypes.STRING,
+    addressType: {
+      type: DataTypes.ENUM("HOME", "WORK"),
+      defaultValue: "HOME"
+    }
+  });
 
-const Address = sequelize.define("Address", {
-  userId: {                   // <-- add this
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  pincode: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  locality: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  address: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  city: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  state: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  landmark: {
-    type: DataTypes.STRING,
-  },
-  alternatePhone: {
-    type: DataTypes.STRING,
-  },
-  addressType: {
-    type: DataTypes.ENUM("HOME", "WORK"),
-    defaultValue: "HOME",
-  }
-});
+  Address.associate = (db) => {
+    Address.belongsTo(db.User, { foreignKey: "userId" });
+  };
 
-module.exports = Address;
+  return Address;
+};

@@ -1,8 +1,12 @@
-const Category = require('../models/category');
+const { Category } = require('../../models');
+console.log('Category type:', typeof Category);
+console.log('Category methods:', Object.getOwnPropertyNames(Category));
 
 exports.getCategories = async (req, res) => {
+    console.log('Inside getCategories');
   try {
     // query params
+    console.log('Query params:', req.query);
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
